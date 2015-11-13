@@ -1,0 +1,38 @@
+{
+  "name": "ipp-encoder",
+  "version": "0.0.0",
+  "description": "Internet Printing Protocol (IPP) encoder and decoder",
+  "main": "index.js",
+  "dependencies": {
+    "tape": "^4.2.2",
+    "standard": "^5.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "standard && tape test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/watson/ipp-encoder.git"
+  },
+  "keywords": [
+    "ipp",
+    "internet",
+    "printing",
+    "protocol",
+    "encode",
+    "encoder",
+    "decode",
+    "decoder",
+    "print",
+    "printer",
+    "parse",
+    "parser"
+  ],
+  "author": "Thomas Watson Steen <w@tson.dk> (https://twitter.com/wa7son)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/watson/ipp-encoder/issues"
+  },
+  "homepage": "https://github.com/watson/ipp-encoder"
+}

@@ -1,0 +1,70 @@
+'use strict'
+
+module.exports = {
+  // Values
+  FALSE: 0x00,
+  TRUE: 0x01,
+  IDLE: 3,
+  PROCESSING: 4,
+  STOPPED: 5,
+
+  // Operation Ids
+  PRINT_JOB: 0x02,
+  PRINT_URI: 0x03,
+  VALIDATE_JOB: 0x04,
+  CREATE_JOB: 0x05,
+  SEND_DOCUMENT: 0x06,
+  SEND_URI: 0x07,
+  CANCEL_JOB: 0x08,
+  GET_JOB_ATTRIBUTES: 0x09,
+  GET_JOBS: 0x0a,
+  GET_PRINTER_ATTRIBUTES: 0x0b,
+  HOLD_JOB: 0x0c,
+  RELEASE_JOB: 0x0d,
+  RESTART_JOB: 0x0e,
+  PAUSE_PRINTER: 0x10,
+  RESUME_PRINTER: 0x11,
+  PURGE_JOBS: 0x12,
+
+  // Delimiter Tags
+  OPERATION_ATTRIBUTES_TAG: 0x01,
+  JOB_ATTRIBUTES_TAG: 0x02,
+  END_OF_ATTRIBUTES_TAG: 0x03,
+  PRINTER_ATTRIBUTES_TAG: 0x04,
+  UNSUPPORTED_ATTRIBUTES_TAG: 0x05,
+
+  // Value Tags (out-of-band)
+  UNSUPPORTED: 0x10,
+  UNKNOWN: 0x12,
+  NO_VALUE: 0x13,
+
+  // Value Tags (integer)
+  INTEGER: 0x21,
+  BOOLEAN: 0x22,
+  ENUM: 0x23,
+
+  // Value Tags (octet-string)
+  OCTET_STRING: 0x30, // with unspecified format
+  DATE_TIME: 0x31,
+  RESOLUTION: 0x32,
+  RANGE_OF_INTEGER: 0x33,
+  TEXT_WITH_LANG: 0x35,
+  NAME_WITH_LANG: 0x36,
+
+  // Value Tags (character-string)
+  TEXT_WITHOUT_LANG: 0x41,
+  NAME_WITHOUT_LANG: 0x42,
+  KEYWORD: 0x44,
+  URI: 0x45,
+  URI_SCHEME: 0x46,
+  CHARSET: 0x47,
+  NATURAL_LANG: 0x48,
+  MIME_MEDIA_TYPE: 0x49,
+
+  // Status Codes
+  SUCCESSFUL_OK: 0x00,
+  SERVER_ERROR_VERSION_NOT_SUPPORTED: 0x0503,
+
+  // Job states
+  PENDING: 0x03
+}
