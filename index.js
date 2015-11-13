@@ -2,7 +2,7 @@
 
 var C = require('./constants')
 
-exports.constants = C
+exports.CONSTANTS = C
 
 exports.request = {
   decode: function () {

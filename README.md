@@ -16,7 +16,7 @@ npm install ipp-encoder
 
 ```js
 var ipp = require('ipp-encoder')
-var C = ipp.constants
+var C = ipp.CONSTANTS
 
 // decode binary buffer from IPP client
 var decoded = ipp.request.decode(buf)
@@ -45,7 +45,7 @@ ipp.response.encode(response) // <Buffer 01 01 00 00 ... >
 
 ## API
 
-### `ipp.constants`
+### `ipp.CONSTANTS`
 
 An object containing IPP constants. See `constants.js` for the complete
 list.
