@@ -278,7 +278,7 @@ langstr.encode = function (obj, buf, offset) {
 }
 
 langstr.encodingLength = function (obj) {
-  return obj.lang.length + obj.value.length + 6
+  return Buffer.byteLength(obj.lang) + Buffer.byteLength(obj.value) + 6
 }
 
 var str = {}
