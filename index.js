@@ -70,6 +70,11 @@ function decode (buf, offset, len) {
           val = tenum.decode(buf, offset)
           offset += tenum.decode.bytes
           break
+        case C.TEXT_WITH_LANG:
+        case C.NAME_WITH_LANG:
+          val = langstr.decode(buf, offset)
+          offset += langstr.decode.bytes
+          break
         default:
           val = str.decode(buf, offset)
           offset += str.decode.bytes
@@ -134,6 +139,11 @@ function encode (obj, buf, offset) {
               tenum.encode(val, buf, offset)
               offset += tenum.encode.bytes
               break
+            case C.TEXT_WITH_LANG:
+            case C.NAME_WITH_LANG:
+              langstr.encode(val, buf, offset)
+              offset += langstr.encode.bytes
+              break
             default:
               str.encode(val, buf, offset)
               offset += str.encode.bytes
@@ -168,6 +178,8 @@ function encodingLength (obj) {
             case C.INTEGER: return len + tint.encodingLength(val)
             case C.BOOLEAN: return len + tbool.encodingLength(val)
             case C.ENUM: return len + tenum.encodingLength(val)
+            case C.TEXT_WITH_LANG:
+            case C.NAME_WITH_LANG: return len + langstr.encodingLength(val)
             default: return len + str.encodingLength(val)
           }
         }, 0)
@@ -240,6 +252,33 @@ tbool.encode = function (b, buf, offset) {
 
 tbool.encodingLength = function (s) {
   return 3
+}
+
+var langstr = {}
+
+langstr.decode = function (buf, offset) {
+  var oldOffset = offset
+  offset += 2
+  var lang = str.decode(buf, offset)
+  offset += str.decode.bytes
+  var val = str.decode(buf, offset)
+  offset += str.decode.bytes
+  langstr.decode.bytes = offset - oldOffset
+  return { lang: lang, value: val }
+}
+
+langstr.encode = function (obj, buf, offset) {
+  str.encode(obj.lang, buf, offset + 2)
+  var len = str.encode.bytes
+  str.encode(obj.value, buf, offset + 2 + len)
+  len += str.encode.bytes
+  buf.writeInt16BE(len, offset)
+  langstr.encode.bytes = len + 2
+  return buf
+}
+
+langstr.encodingLength = function (obj) {
+  return obj.lang.length + obj.value.length + 6
 }
 
 var str = {}

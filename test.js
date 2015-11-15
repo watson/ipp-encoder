@@ -24,12 +24,13 @@ test('encodingLength', function (t) {
             { tag: C.ENUM, name: 'enum', value: 1 } // +1+2+4+2+4=13 (67)
           ] },
           { tag: 1, attributes: [ // +1 (68)
-            { tag: C.KEYWORD, name: 'string', values: ['foo'] } // +1+2+6+2+3=14 (82)
+            { tag: C.KEYWORD, name: 'string', values: ['foo'] }, // +1+2+6+2+3=14 (82)
+            { tag: C.TEXT_WITH_LANG, name: 'text-with-language', value: { lang: 'fr-CA', value: 'fou' } } // +1+2+18+2+2+5+2+3=35 (117)
           ] }
         ]
-      } // end tag: +1 (83)
+      } // end tag: +1 (118)
       var len = ipp[type].encodingLength(obj)
-      t.deepEqual(len, 83)
+      t.deepEqual(len, 118)
       t.end()
     })
 
@@ -106,7 +107,8 @@ test('encode', function (t) {
             { tag: C.ENUM, name: 'enum', value: 42 }
           ] },
           { tag: C.JOB_ATTRIBUTES_TAG, attributes: [
-            { tag: C.KEYWORD, name: 'string', values: ['foo'] }
+            { tag: C.KEYWORD, name: 'string', values: ['foo'] },
+            { tag: C.NAME_WITH_LANG, name: 'name-with-language', value: { lang: 'fr-CA', value: 'fou' } }
           ] }
         ]
       }
@@ -147,6 +149,14 @@ test('encode', function (t) {
             '737472696e67' + // name
             '0003' + // value length
             '666f6f' + // value
+          '36' + // value tag
+            '0012' + // name length
+            '6e616d652d776974682d6c616e6775616765' + // name
+            '000c' + // value length
+            '0005' + // sub-value length
+            '66722d4341' + // sub-value
+            '0003' + // sub-value length
+            '666f75' + // name
         '03', // end of attributes tag
         'hex')
       t.deepEqual(encoded, expected)
