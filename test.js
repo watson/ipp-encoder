@@ -139,7 +139,7 @@ test('encode', function (t) {
           '23' + // value tag
             '0004' + // name length
             '656e756d' + // name
-            '0001' + // value length
+            '0004' + // value length
             '0000002a' + // value
         '02' + // delimiter tag
           '44' + // value tag

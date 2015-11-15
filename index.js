@@ -194,7 +194,7 @@ tint.decode = function (buf, offset) {
 }
 
 tint.encode = function (i, buf, offset) {
-  buf.writeInt16BE(0x01, offset)
+  buf.writeInt16BE(4, offset)
   buf.writeInt32BE(i, offset + 2)
   tint.encode.bytes = 6
   return buf
@@ -213,7 +213,7 @@ tenum.decode = function (buf, offset) {
 }
 
 tenum.encode = function (i, buf, offset) {
-  buf.writeInt16BE(0x01, offset)
+  buf.writeInt16BE(4, offset)
   buf.writeInt32BE(i, offset + 2)
   tenum.encode.bytes = 6
   return buf
@@ -232,7 +232,7 @@ tbool.decode = function (buf, offset) {
 }
 
 tbool.encode = function (b, buf, offset) {
-  buf.writeInt16BE(0x01, offset)
+  buf.writeInt16BE(1, offset)
   buf.writeInt8(b ? C.TRUE : C.FALSE, offset + 2)
   tbool.encode.bytes = 3
   return buf
