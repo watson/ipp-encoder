@@ -4,9 +4,6 @@ module.exports = {
   // Values
   FALSE: 0x00,
   TRUE: 0x01,
-  IDLE: 3,
-  PROCESSING: 4,
-  STOPPED: 5,
 
   // Operation Ids
   PRINT_JOB: 0x02,
@@ -64,6 +61,11 @@ module.exports = {
   // Status Codes
   SUCCESSFUL_OK: 0x00,
   SERVER_ERROR_VERSION_NOT_SUPPORTED: 0x0503,
+
+  // Printer states
+  PRINTER_IDLE: 3,
+  PRINTER_PROCESSING: 4,
+  PRINTER_STOPPED: 5,
 
   // Job states
   PENDING: 0x03
