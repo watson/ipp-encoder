@@ -3,6 +3,7 @@
 var C = require('./constants')
 
 exports.CONSTANTS = C
+exports.STATUS_CODES = require('./status-codes')
 
 exports.request = {
   decode: function () {

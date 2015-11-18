@@ -50,6 +50,11 @@ ipp.response.encode(response) // <Buffer 01 01 00 00 ... >
 An object containing IPP constants. See `constants.js` for the complete
 list.
 
+### `ipp.STATUS_CODES`
+
+Map of IPP status codes to descriptive strings. See `status-codes.js`
+for the complete list.
+
 ### `ipp.request.decode(buffer[, offset][, length])`
 
 Decode an IPP request buffer and returns the request object.
