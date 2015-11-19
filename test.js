@@ -212,6 +212,32 @@ test('encode', function (t) {
   })
 })
 
+test('decode', function (t) {
+  t.test('request', function (t) {
+    t.test('minimal', function (t) {
+      var data = new Buffer('0101000a0000002a03', 'hex')
+      var expected = {
+        version: { major: 1, minor: 1 },
+        operationId: 10,
+        requestId: 42,
+        groups: [],
+        data: new Buffer(0)
+      }
+      var decoded = ipp.request.decode(data)
+      t.deepEqual(decoded, expected)
+      t.end()
+    })
+
+    t.test('truncated', function (t) {
+      var data = new Buffer('0101000a0000002a', 'hex')
+      t.throws(function () {
+        ipp.request.decode(data)
+      })
+      t.end()
+    })
+  })
+})
+
 test('encode -> decode', function (t) {
   var obj = {
     version: { major: 1, minor: 0 },
