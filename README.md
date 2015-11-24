@@ -78,7 +78,7 @@ Request object structure:
   operationId: 0x02,
   requestId: 1,
   groups: [
-    { tag: 0x01, attributes: [
+    { tag: C.OPERATION_ATTRIBUTES_TAG, attributes: [
       { tag: 0x47, name: 'attributes-charset', values: ['utf-8'] },
       { tag: 0x48, name: 'attributes-natural-language', values: ['en-us'] },
       { tag: 0x45, name: 'printer-uri', values: ['ipp://watson.local.:3000/'] },
@@ -112,7 +112,7 @@ Response object structure:
   statusCode: 0x00,
   requestId: 1,
   groups: [
-    { tag: 0x01, attributes: [
+    { tag: C.OPERATION_ATTRIBUTES_TAG, attributes: [
       { tag: 0x47, name: 'attributes-charset', values: ['utf-8'] },
       { tag: 0x48, name: 'attributes-natural-language', values: ['en-us'] },
       { tag: 0x41, name: 'status-message', values: ['successful-ok'] }
