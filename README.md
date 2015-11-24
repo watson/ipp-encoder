@@ -24,7 +24,7 @@ var decoded = ipp.request.decode(buf)
 // prepare response
 var response = {
   statusCode: C.SUCCESSFUL_OK,
-  requestId: decoded.requestId, // use operationId if encoding a request
+  requestId: decoded.requestId, // set `operationId` instead if encoding a request
   groups: [
     { tag: C.OPERATION_ATTRIBUTES_TAG, attributes: [
       { tag: C.CHARSET, name: 'attributes-charset', value: 'utf-8' },
