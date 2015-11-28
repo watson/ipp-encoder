@@ -1,6 +1,6 @@
 {
   "name": "ipp-encoder",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Internet Printing Protocol (IPP) encoder and decoder",
   "main": "index.js",
   "dependencies": {
@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/watson/ipp-encoder",
   "coordinates": [
-    42.353402,
-    -71.06241120000001
+    44.47620610000001,
+    -73.21134599999999
   ]
 }
