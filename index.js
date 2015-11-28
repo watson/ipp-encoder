@@ -120,7 +120,7 @@ function encode (obj, buf, offset) {
       buf.writeInt8(group.tag, offset++)
 
       group.attributes.forEach(function (attr) {
-        var values = attr.value ? [attr.value] : attr.values
+        var values = 'value' in attr ? [attr.value] : attr.values
         values.forEach(function (val, i) {
           buf.writeInt8(attr.tag, offset++)
 
