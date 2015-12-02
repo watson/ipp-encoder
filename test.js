@@ -99,6 +99,12 @@ test('encode', function (t) {
 
     test('groups', function (t) {
       var date = new Date(2015, 11, 1, 1, 23, 45, 678)
+      var sign = date.getTimezoneOffset() > 0 ? '2d' : '2b'
+      var zone = new Buffer(2)
+      zone.writeInt8(date.getTimezoneOffset() / 60, 0)
+      zone.writeInt8(date.getTimezoneOffset() % 60, 1)
+      var dateHex = '07df0c0101172d06' + sign + zone.toString('hex')
+
       var obj = {
         statusCode: C.SUCCESSFUL_OK,
         requestId: 42,
@@ -165,7 +171,7 @@ test('encode', function (t) {
             '0009' + // name length
             '646174652d74696d65' + // name
             '000b' + // value length
-            '07df0c0101172d062d0500' + // value
+            dateHex + // value
         '03', // end of attributes tag
         'hex')
       t.deepEqual(encoded, expected)
