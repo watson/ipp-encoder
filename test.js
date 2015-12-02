@@ -15,6 +15,7 @@ test('encodingLength', function (t) {
     })
 
     test(type + ' groups', function (t) {
+      var date = new Date(2015, 11, 1, 1, 23, 45, 678)
       var obj = { // version + statusCode + operationId/requestId: +8
         groups: [
           { tag: 0, attributes: [ // +1 (9)
@@ -25,12 +26,13 @@ test('encodingLength', function (t) {
           ] },
           { tag: 1, attributes: [ // +1 (68)
             { tag: C.KEYWORD, name: 'string', values: ['foo'] }, // +1+2+6+2+3=14 (82)
-            { tag: C.TEXT_WITH_LANG, name: 'text-with-language', value: { lang: 'fr-CA', value: 'fou' } } // +1+2+18+2+2+5+2+3=35 (117)
+            { tag: C.TEXT_WITH_LANG, name: 'text-with-language', value: { lang: 'fr-CA', value: 'fou' } }, // +1+2+18+2+2+5+2+3=35 (117)
+            { tag: C.DATE_TIME, name: 'date-time', value: date } // +1+2+9+2+11=25 (142)
           ] }
         ]
-      } // end tag: +1 (118)
+      } // end tag: +1 (143)
       var len = ipp[type].encodingLength(obj)
-      t.deepEqual(len, 118)
+      t.deepEqual(len, 143)
       t.end()
     })
 
@@ -96,6 +98,7 @@ test('encode', function (t) {
     })
 
     test('groups', function (t) {
+      var date = new Date(2015, 11, 1, 1, 23, 45, 678)
       var obj = {
         statusCode: C.SUCCESSFUL_OK,
         requestId: 42,
@@ -108,7 +111,8 @@ test('encode', function (t) {
           ] },
           { tag: C.JOB_ATTRIBUTES_TAG, attributes: [
             { tag: C.KEYWORD, name: 'string', values: ['foo'] },
-            { tag: C.NAME_WITH_LANG, name: 'name-with-language', value: { lang: 'fr-CA', value: 'fou' } }
+            { tag: C.NAME_WITH_LANG, name: 'name-with-language', value: { lang: 'fr-CA', value: 'fou' } },
+            { tag: C.DATE_TIME, name: 'date-time', value: date }
           ] }
         ]
       }
@@ -157,6 +161,11 @@ test('encode', function (t) {
             '66722d4341' + // sub-value
             '0003' + // sub-value length
             '666f75' + // name
+          '31' + // value tag
+            '0009' + // name length
+            '646174652d74696d65' + // name
+            '000b' + // value length
+            '07df0c0101172d062d0500' + // value
         '03', // end of attributes tag
         'hex')
       t.deepEqual(encoded, expected)
@@ -239,6 +248,8 @@ test('decode', function (t) {
 })
 
 test('encode -> decode', function (t) {
+  var encodeDate = new Date(2015, 11, 1, 1, 23, 45, 678)
+  var decodeDate = new Date(2015, 11, 1, 1, 23, 45, 600)
   var obj = {
     version: { major: 1, minor: 0 },
     statusCode: C.SUCCESSFUL_OK,
@@ -251,12 +262,14 @@ test('encode -> decode', function (t) {
         { tag: C.ENUM, name: 'enum', values: [42] }
       ] },
       { tag: C.JOB_ATTRIBUTES_TAG, attributes: [
-        { tag: C.KEYWORD, name: 'string', values: ['foo'] }
+        { tag: C.KEYWORD, name: 'string', values: ['foo'] },
+        { tag: C.DATE_TIME, name: 'date-time', values: [encodeDate] }
       ] }
     ],
     data: new Buffer('foo')
   }
   var encoded = ipp.response.encode(obj)
+  obj.groups[1].attributes[1].values[0] = decodeDate
   var decoded = ipp.response.decode(encoded)
   t.deepEqual(decoded, obj)
   t.end()

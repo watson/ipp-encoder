@@ -71,6 +71,10 @@ function decode (buf, offset, len) {
           val = tenum.decode(buf, offset)
           offset += tenum.decode.bytes
           break
+        case C.DATE_TIME:
+          val = tdatetime.decode(buf, offset)
+          offset += tdatetime.decode.bytes
+          break
         case C.TEXT_WITH_LANG:
         case C.NAME_WITH_LANG:
           val = langstr.decode(buf, offset)
@@ -140,6 +144,10 @@ function encode (obj, buf, offset) {
               tenum.encode(val, buf, offset)
               offset += tenum.encode.bytes
               break
+            case C.DATE_TIME:
+              tdatetime.encode(val, buf, offset)
+              offset += tdatetime.encode.bytes
+              break
             case C.TEXT_WITH_LANG:
             case C.NAME_WITH_LANG:
               langstr.encode(val, buf, offset)
@@ -179,6 +187,7 @@ function encodingLength (obj) {
             case C.INTEGER: return len + tint.encodingLength(val)
             case C.BOOLEAN: return len + tbool.encodingLength(val)
             case C.ENUM: return len + tenum.encodingLength(val)
+            case C.DATE_TIME: return len + tdatetime.encodingLength(val)
             case C.TEXT_WITH_LANG:
             case C.NAME_WITH_LANG: return len + langstr.encodingLength(val)
             default: return len + str.encodingLength(val)
@@ -300,4 +309,47 @@ str.encode = function (s, buf, offset) {
 
 str.encodingLength = function (s) {
   return Buffer.byteLength(s) + 2
+}
+
+var tdatetime = {}
+
+tdatetime.decode = function (buf, offset) {
+  var drift = (buf.readInt8(offset + 11) * 60) + buf.readInt8(offset + 12)
+  if (buf.slice(offset + 10, offset + 11) === '+') drift = drift * -1
+
+  var d = new Date(Date.UTC(
+    buf.readInt16BE(offset + 2),
+    buf.readInt8(offset + 4) - 1,
+    buf.readInt8(offset + 5),
+    buf.readInt8(offset + 6),
+    buf.readInt8(offset + 7) + drift,
+    buf.readInt8(offset + 8),
+    buf.readInt8(offset + 9) * 100
+  ))
+
+  tdatetime.decode.bytes = 13
+
+  return d
+}
+
+tdatetime.encode = function (d, buf, offset) {
+  buf.writeInt16BE(11, offset)
+  buf.writeInt16BE(d.getFullYear(), offset + 2)
+  buf.writeInt8(d.getMonth() + 1, offset + 4)
+  buf.writeInt8(d.getDate(), offset + 5)
+  buf.writeInt8(d.getHours(), offset + 6)
+  buf.writeInt8(d.getMinutes(), offset + 7)
+  buf.writeInt8(d.getSeconds(), offset + 8)
+  buf.writeInt8(Math.floor(d.getMilliseconds() / 100), offset + 9)
+  buf.write(d.getTimezoneOffset() > 0 ? '-' : '+', offset + 10)
+  buf.writeInt8(d.getTimezoneOffset() / 60, offset + 11)
+  buf.writeInt8(d.getTimezoneOffset() % 60, offset + 12)
+
+  tdatetime.encode.bytes = 13
+
+  return buf
+}
+
+tdatetime.encodingLength = function (s) {
+  return 13
 }
