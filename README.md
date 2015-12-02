@@ -80,15 +80,15 @@ Request object structure:
   requestId: 1,
   groups: [
     { tag: C.OPERATION_ATTRIBUTES_TAG, attributes: [
-      { tag: 0x47, name: 'attributes-charset', values: ['utf-8'] },
-      { tag: 0x48, name: 'attributes-natural-language', values: ['en-us'] },
-      { tag: 0x45, name: 'printer-uri', values: ['ipp://watson.local.:3000/'] },
-      { tag: 0x42, name: 'job-name', values: ['foobar'] },
-      { tag: 0x22, name: 'ipp-attribute-fidelity', values: [true] }
+      { tag: 0x47, name: 'attributes-charset', value: ['utf-8'] },
+      { tag: 0x48, name: 'attributes-natural-language', value: ['en-us'] },
+      { tag: 0x45, name: 'printer-uri', value: ['ipp://watson.local.:3000/'] },
+      { tag: 0x42, name: 'job-name', value: ['foobar'] },
+      { tag: 0x22, name: 'ipp-attribute-fidelity', value: [true] }
     ] },
     { tag: C.JOB_ATTRIBUTES_TAG, attributes: [
-      { tag: 0x21, name: 'copies', values: [20] },
-      { tag: 0x44, name: 'sides', values: ['two-sided-long-edge'] }
+      { tag: 0x21, name: 'copies', value: [20] },
+      { tag: 0x44, name: 'sides', value: ['two-sided-long-edge'] }
     ] }
   ],
   data: <Buffer 25 21 50 53 ...>
@@ -114,14 +114,14 @@ Response object structure:
   requestId: 1,
   groups: [
     { tag: C.OPERATION_ATTRIBUTES_TAG, attributes: [
-      { tag: 0x47, name: 'attributes-charset', values: ['utf-8'] },
-      { tag: 0x48, name: 'attributes-natural-language', values: ['en-us'] },
-      { tag: 0x41, name: 'status-message', values: ['successful-ok'] }
+      { tag: 0x47, name: 'attributes-charset', value: ['utf-8'] },
+      { tag: 0x48, name: 'attributes-natural-language', value: ['en-us'] },
+      { tag: 0x41, name: 'status-message', value: ['successful-ok'] }
     ] },
     { tag: C.JOB_ATTRIBUTES_TAG, attributes: [
-      { tag: 0x21, name: 'job-id', values: [147] },
-      { tag: 0x45, name: 'job-uri', values: ['ipp://watosn.local.:3000/123'] }
-      { tag: 0x44, name: 'job-state', values: ['pending'] }
+      { tag: 0x21, name: 'job-id', value: [147] },
+      { tag: 0x45, name: 'job-uri', value: ['ipp://watosn.local.:3000/123'] }
+      { tag: 0x44, name: 'job-state', value: ['pending'] }
     ] }
   ]
 }

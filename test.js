@@ -20,12 +20,12 @@ test('encodingLength', function (t) {
         groups: [
           { tag: 0, attributes: [ // +1 (9)
             { tag: C.KEYWORD, name: 'string', value: 'foo' }, // +1+2+6+2+3=14 (23)
-            { tag: C.KEYWORD, name: 'array', values: ['foo', 'bar'] }, // +1+2+5+2+3+1+2+0+2+3=21 (44)
+            { tag: C.KEYWORD, name: 'array', value: ['foo', 'bar'] }, // +1+2+5+2+3+1+2+0+2+3=21 (44)
             { tag: C.BOOLEAN, name: 'bool', value: true }, // +1+2+4+2+1=10 (54)
             { tag: C.ENUM, name: 'enum', value: 1 } // +1+2+4+2+4=13 (67)
           ] },
           { tag: 1, attributes: [ // +1 (68)
-            { tag: C.KEYWORD, name: 'string', values: ['foo'] }, // +1+2+6+2+3=14 (82)
+            { tag: C.KEYWORD, name: 'string', value: ['foo'] }, // +1+2+6+2+3=14 (82)
             { tag: C.TEXT_WITH_LANG, name: 'text-with-language', value: { lang: 'fr-CA', value: 'fou' } }, // +1+2+18+2+2+5+2+3=35 (117)
             { tag: C.DATE_TIME, name: 'date-time', value: date } // +1+2+9+2+11=25 (142)
           ] }
@@ -105,12 +105,12 @@ test('encode', function (t) {
         groups: [
           { tag: C.OPERATION_ATTRIBUTES_TAG, attributes: [
             { tag: C.KEYWORD, name: 'string', value: 'foo' },
-            { tag: C.KEYWORD, name: 'array', values: ['foo', 'bar'] },
+            { tag: C.KEYWORD, name: 'array', value: ['foo', 'bar'] },
             { tag: C.BOOLEAN, name: 'bool', value: true },
             { tag: C.ENUM, name: 'enum', value: 42 }
           ] },
           { tag: C.JOB_ATTRIBUTES_TAG, attributes: [
-            { tag: C.KEYWORD, name: 'string', values: ['foo'] },
+            { tag: C.KEYWORD, name: 'string', value: ['foo'] },
             { tag: C.NAME_WITH_LANG, name: 'name-with-language', value: { lang: 'fr-CA', value: 'fou' } },
             { tag: C.DATE_TIME, name: 'date-time', value: date }
           ] }
@@ -256,20 +256,20 @@ test('encode -> decode', function (t) {
     requestId: 42,
     groups: [
       { tag: C.OPERATION_ATTRIBUTES_TAG, attributes: [
-        { tag: C.KEYWORD, name: 'string', values: ['foo'] },
-        { tag: C.KEYWORD, name: 'array', values: ['foo', 'bar'] },
-        { tag: C.BOOLEAN, name: 'bool', values: [true] },
-        { tag: C.ENUM, name: 'enum', values: [42] }
+        { tag: C.KEYWORD, name: 'string', value: ['foo'] },
+        { tag: C.KEYWORD, name: 'array', value: ['foo', 'bar'] },
+        { tag: C.BOOLEAN, name: 'bool', value: [true] },
+        { tag: C.ENUM, name: 'enum', value: [42] }
       ] },
       { tag: C.JOB_ATTRIBUTES_TAG, attributes: [
-        { tag: C.KEYWORD, name: 'string', values: ['foo'] },
-        { tag: C.DATE_TIME, name: 'date-time', values: [encodeDate] }
+        { tag: C.KEYWORD, name: 'string', value: ['foo'] },
+        { tag: C.DATE_TIME, name: 'date-time', value: [encodeDate] }
       ] }
     ],
     data: new Buffer('foo')
   }
   var encoded = ipp.response.encode(obj)
-  obj.groups[1].attributes[1].values[0] = decodeDate
+  obj.groups[1].attributes[1].value[0] = decodeDate
   var decoded = ipp.response.decode(encoded)
   t.deepEqual(decoded, obj)
   t.end()

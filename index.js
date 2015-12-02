@@ -86,9 +86,9 @@ function decode (buf, offset, len) {
       }
 
       if (!name) {
-        attr.values.push(val)
+        attr.value.push(val)
       } else {
-        var attr = { tag: tag, name: name, values: [val] }
+        var attr = { tag: tag, name: name, value: [val] }
         group.attributes.push(attr)
       }
 
@@ -124,8 +124,8 @@ function encode (obj, buf, offset) {
       buf.writeInt8(group.tag, offset++)
 
       group.attributes.forEach(function (attr) {
-        var values = 'value' in attr ? [attr.value] : attr.values
-        values.forEach(function (val, i) {
+        var value = Array.isArray(attr.value) ? attr.value : [attr.value]
+        value.forEach(function (val, i) {
           buf.writeInt8(attr.tag, offset++)
 
           str.encode(i ? '' : attr.name, buf, offset)
@@ -178,8 +178,8 @@ function encodingLength (obj) {
     len += obj.groups.reduce(function (len, group) {
       len += 1 // begin-attribute-group-tag
       len += group.attributes.reduce(function (len, attr) {
-        var values = attr.value === undefined ? attr.values : [attr.value]
-        len += values.reduce(function (len, val) {
+        var value = Array.isArray(attr.value) ? attr.value : [attr.value]
+        len += value.reduce(function (len, val) {
           len += 1 // value-tag
           len += str.encodingLength(len === 1 ? attr.name : '')
 
