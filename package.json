@@ -3,11 +3,11 @@
   "version": "4.0.1",
   "description": "Internet Printing Protocol (IPP) encoder and decoder",
   "main": "index.js",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "tape": "^4.2.2",
     "standard": "^5.3.1"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "standard && tape test.js"
   },
