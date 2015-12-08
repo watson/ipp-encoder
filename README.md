@@ -29,7 +29,7 @@ var response = {
     { tag: C.OPERATION_ATTRIBUTES_TAG, attributes: [
       { tag: C.CHARSET, name: 'attributes-charset', value: 'utf-8' },
       { tag: C.NATURAL_LANG, name: 'attributes-natural-language', value: 'en-us' },
-      { tag: C.TEXT_WITH_LANG, name: 'status-message', value: 'successful-ok' }
+      { tag: C.TEXT_WITH_LANG, name: 'status-message', value: { lang: 'en-us', value: 'successful-ok' } }
     ] },
     { tag: C.JOB_ATTRIBUTES_TAG, attributes: [
       { tag: C.INTEGER, name: 'job-id', value: 147 },
