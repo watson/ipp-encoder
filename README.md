@@ -2,6 +2,9 @@
 
 Internet Printing Protocol (IPP) encoder and decoder.
 
+This module can be used to implement either a printing client or a
+printer server.
+
 [![Build status](https://travis-ci.org/watson/ipp-encoder.svg?branch=master)](https://travis-ci.org/watson/ipp-encoder)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 [![abstract-encoding](https://img.shields.io/badge/abstract--encoding-compliant-brightgreen.svg?style=flat)](https://github.com/mafintosh/abstract-encoding)
@@ -13,6 +16,8 @@ npm install ipp-encoder
 ```
 
 ## Usage
+
+Printer server example:
 
 ```js
 var ipp = require('ipp-encoder')
