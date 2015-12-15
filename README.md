@@ -35,8 +35,7 @@ var response = {
       { tag: C.INTEGER, name: 'job-id', value: 147 },
       { tag: C.NAME_WITH_LANG, name: 'job-name', value: { lang: 'en-us', value: 'Foobar' } }
     ] }
-  ],
-  data: new Buffer('...')
+  ]
 }
 
 // encode response to binary buffer
