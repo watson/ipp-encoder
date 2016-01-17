@@ -29,10 +29,10 @@ exports.response = {
   encodingLength: encodingLength
 }
 
-function decode (buf, offset, len) {
-  if (!offset) offset = 0
-  if (!len) len = buf.length
-  var oldOffset = offset
+function decode (buf, start, end) {
+  if (!start) start = 0
+  if (!end) end = buf.length
+  var offset = start
 
   var obj = {
     version: {},
@@ -48,7 +48,7 @@ function decode (buf, offset, len) {
 
   // attribute groups
   var tag = buf.readInt8(offset++) // delimiter-tag
-  while (tag !== C.END_OF_ATTRIBUTES_TAG && offset < len) {
+  while (tag !== C.END_OF_ATTRIBUTES_TAG && offset < end) {
     var group = { tag: tag, attributes: [] }
 
     // attribute-with-one-value or additional-value
@@ -98,9 +98,7 @@ function decode (buf, offset, len) {
     obj.groups.push(group)
   }
 
-  obj.data = buf.slice(offset, len)
-
-  decode.bytes = len - oldOffset
+  decode.bytes = offset - start
 
   return obj
 }

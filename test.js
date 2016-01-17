@@ -35,27 +35,6 @@ test('encodingLength', function (t) {
       t.deepEqual(len, 143)
       t.end()
     })
-
-    t.test(type + ' data', function (t) {
-      var obj = { data: new Buffer('foo') }
-      var len = ipp[type].encodingLength(obj)
-      t.deepEqual(len, 12)
-      t.end()
-    })
-
-    t.test(type + ' data + groups', function (t) {
-      var obj = { // version + statusCode + operationId/requestId: +8
-        groups: [
-          { tag: 1, attributes: [ // +1 (9)
-            { tag: C.KEYWORD, name: 'string', value: 'foo' } // +1+2+6+2+3=14 (23)
-          ] }
-        ],
-        data: new Buffer('foo') // +3 (26)
-      } // end tag: +1 (27)
-      var len = ipp[type].encodingLength(obj)
-      t.deepEqual(len, 27)
-      t.end()
-    })
   })
 })
 
@@ -177,53 +156,6 @@ test('encode', function (t) {
       t.deepEqual(encoded, expected)
       t.end()
     })
-
-    t.test('data', function (t) {
-      var obj = {
-        statusCode: C.SUCCESSFUL_OK, // +2 (4)
-        requestId: 42, // +4 (8)
-        data: new Buffer('foo')
-      }
-      var encoded = ipp.response.encode(obj)
-      var expected = new Buffer(
-        '0101' + // version
-        '0000' + // statusCode
-        '0000002a' + // requestId
-        '03' + // end of attributes tag
-        '666f6f', // data
-        'hex')
-      t.deepEqual(encoded, expected)
-      t.end()
-    })
-
-    t.test('data + groups', function (t) {
-      var obj = { // version: 2
-        statusCode: C.SUCCESSFUL_OK, // +2 (4)
-        requestId: 42, // +4 (8)
-        groups: [
-          { tag: C.JOB_ATTRIBUTES_TAG, attributes: [ // +1 (64)
-            { tag: C.KEYWORD, name: 'string', value: 'foo' } // +1+2+6+2+3=14 (78)
-          ] }
-        ],
-        data: new Buffer('foo')
-      } // end tag: +1 (79)
-      var encoded = ipp.response.encode(obj)
-      var expected = new Buffer(
-        '0101' + // version
-        '0000' + // statusCode
-        '0000002a' + // requestId
-        '02' + // delimiter tag
-          '44' + // value tag
-            '0006' + // name length
-            '737472696e67' + // name
-            '0003' + // value length
-            '666f6f' + // value
-        '03' + // end of attributes tag
-        '666f6f', // data
-        'hex')
-      t.deepEqual(encoded, expected)
-      t.end()
-    })
   })
 })
 
@@ -235,8 +167,7 @@ test('decode', function (t) {
         version: { major: 1, minor: 1 },
         operationId: 10,
         requestId: 42,
-        groups: [],
-        data: new Buffer(0)
+        groups: []
       }
       var decoded = ipp.request.decode(data)
       t.deepEqual(decoded, expected)
@@ -271,10 +202,9 @@ test('encode -> decode', function (t) {
         { tag: C.KEYWORD, name: 'string', value: ['foo'] },
         { tag: C.DATE_TIME, name: 'date-time', value: [encodeDate] }
       ] }
-    ],
-    data: new Buffer('foo')
+    ]
   }
-  var encoded = ipp.response.encode(obj)
+  var encoded = Buffer.concat([ipp.response.encode(obj), new Buffer('foo')])
   obj.groups[1].attributes[1].value[0] = decodeDate
   var decoded = ipp.response.decode(encoded)
   t.deepEqual(decoded, obj)

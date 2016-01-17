@@ -61,17 +61,17 @@ list.
 Map of IPP status codes to descriptive strings. See `status-codes.js`
 for the complete list.
 
-### `ipp.request.decode(buffer[, offset][, length])`
+### `ipp.request.decode(buffer[, start][, end])`
 
 Decode an IPP request buffer and returns the request object.
 
 Options:
 
 - `buffer` - The buffer containing the request
-- `offset` - An optional offset from where to start parsing the request
-  (defaults to `0`)
-- `length` - An optional number of bytes to parse (defaults to
-  `buffer.length`)
+- `start` - An optional start-offset from where to start parsing the
+  request (defaults to `0`)
+- `end` - An optional end-offset specifying at which byte to end the
+  decoding (defaults to `buffer.length`)
 
 Request object structure:
 
@@ -95,13 +95,14 @@ Request object structure:
       { tag: 0x21, name: 'copies', value: [20] },
       { tag: 0x44, name: 'sides', value: ['two-sided-long-edge'] }
     ] }
-  ],
-  data: <Buffer 25 21 50 53 ...>
+  ]
 }
 ```
 
 After decoding `ipp.request.decode.bytes` is set to the amount of bytes
 used to decode the object.
+
+Note that any data after the IPP headers are ignored.
 
 ### `ipp.request.encode(obj[, buffer][, offset])`
 
