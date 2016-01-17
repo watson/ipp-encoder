@@ -100,6 +100,9 @@ Request object structure:
 }
 ```
 
+After decoding `ipp.request.decode.bytes` is set to the amount of bytes
+used to decode the object.
+
 ### `ipp.request.encode(obj[, buffer][, offset])`
 
 Encode an IPP request object and returns en encoded buffer.
@@ -135,6 +138,9 @@ Response object structure:
 It's possible to provide a custom IPP version in the same format is seen
 in the request. Default IPP version is 1.1.
 
+After encoding, `ipp.request.encode.bytes` is set to the amount of bytes
+used to encode the object.
+
 ### `ipp.request.encodingLength(obj)`
 
 Returns the number of bytes it would take to encode the given IPP
@@ -144,9 +150,15 @@ request object.
 
 Same as `ipp.request.decode()`, but for IPP responses.
 
+After decoding `ipp.response.decode.bytes` is set to the amount of bytes
+used to decode the object.
+
 ### `ipp.response.encode(obj[, buffer][, offset])`
 
 Same as `ipp.request.encode()`, but for IPP responses.
+
+After encoding, `ipp.response.encode.bytes` is set to the amount of bytes
+used to encode the object.
 
 ### `ipp.response.encodingLength(obj)`
 
