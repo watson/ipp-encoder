@@ -14,7 +14,7 @@ test('encodingLength', function (t) {
       t.end()
     })
 
-    test(type + ' groups', function (t) {
+    t.test(type + ' groups', function (t) {
       var date = new Date(2015, 11, 1, 1, 23, 45, 678)
       var obj = { // version + statusCode + operationId/requestId: +8
         groups: [
@@ -36,14 +36,14 @@ test('encodingLength', function (t) {
       t.end()
     })
 
-    test(type + ' data', function (t) {
+    t.test(type + ' data', function (t) {
       var obj = { data: new Buffer('foo') }
       var len = ipp[type].encodingLength(obj)
       t.deepEqual(len, 12)
       t.end()
     })
 
-    test(type + ' data + groups', function (t) {
+    t.test(type + ' data + groups', function (t) {
       var obj = { // version + statusCode + operationId/requestId: +8
         groups: [
           { tag: 1, attributes: [ // +1 (9)
@@ -97,7 +97,7 @@ test('encode', function (t) {
       t.end()
     })
 
-    test('groups', function (t) {
+    t.test('groups', function (t) {
       var date = new Date(2015, 11, 1, 1, 23, 45, 678)
       var sign = date.getTimezoneOffset() > 0 ? '2d' : '2b'
       var zone = new Buffer(2)
@@ -178,7 +178,7 @@ test('encode', function (t) {
       t.end()
     })
 
-    test('data', function (t) {
+    t.test('data', function (t) {
       var obj = {
         statusCode: C.SUCCESSFUL_OK, // +2 (4)
         requestId: 42, // +4 (8)
@@ -196,7 +196,7 @@ test('encode', function (t) {
       t.end()
     })
 
-    test('data + groups', function (t) {
+    t.test('data + groups', function (t) {
       var obj = { // version: 2
         statusCode: C.SUCCESSFUL_OK, // +2 (4)
         requestId: 42, // +4 (8)
