@@ -26,6 +26,8 @@ var C = ipp.CONSTANTS
 // decode binary buffer from IPP client
 var decoded = ipp.request.decode(buf)
 
+// ...handle request...
+
 // prepare response
 var response = {
   statusCode: C.SUCCESSFUL_OK, // set `operationId` instead if encoding a request
