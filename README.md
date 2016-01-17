@@ -147,7 +147,7 @@ used to encode the object.
 Returns the number of bytes it would take to encode the given IPP
 request object.
 
-### `ipp.response.decode(buffer[, offset][, length])`
+### `ipp.response.decode(buffer[, start][, end])`
 
 Same as `ipp.request.decode()`, but for IPP responses.
 
