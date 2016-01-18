@@ -129,7 +129,7 @@ Response object structure:
     ] },
     { tag: C.JOB_ATTRIBUTES_TAG, attributes: [
       { tag: 0x21, name: 'job-id', value: [147] },
-      { tag: 0x45, name: 'job-uri', value: ['ipp://watosn.local.:3000/123'] }
+      { tag: 0x45, name: 'job-uri', value: ['ipp://watson.local.:3000/123'] }
       { tag: 0x44, name: 'job-state', value: ['pending'] }
     ] }
   ]
